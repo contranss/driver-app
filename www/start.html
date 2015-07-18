@@ -28,40 +28,49 @@
     <h1 class="title">e-Κίνησις</h1>
     </ion-header-bar>
     <ion-content ng-controller="HomeCtrl as vm">
-      <div class="row">
-        <div class="col"></div>
-          <button class="button button-block ion-wrench button-assertive" style="height: 86px; font-size: 0.9em;">
-          Μηχανική Βλάβη
+      <ion-list>
+        <div class="row">
+          <div class="col">
+            <button class="button button-block ion-wrench button-assertive" style="height: 86px; line-height: 24px;">
+              <small>Μηχανική Βλάβη</small>
+            </button>
+          </div>
+          <div class="col">
+            <button class="button button-block ion-ios-pulse-strong button-energized" style="height: 86px; line-height: 24px;">
+              <small>Ατύχημα</small>
+            </button>
+          </div>
+          <div class="col">
+            <button class="button button-block ion-ios-people button-calm" style="height: 86px; line-height: 24px;">
+            <small>Υπερπληρότητα</small>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+          <button class="button button-block ion-android-walk button-royal" style="height: 86px; line-height: 24px;">
+            <small>Παρακώληση Λεωφ/λορίδας</small>
           </button>
-          <div class="col"></div>
-          <button class="button button-block ion-ios-pulse-strong button-energized" style="height: 86px; font-size: 0.9em;">
-          Ατύχημα
+          </div>
+          <div class="col">
+          <button class="button button-block ion-android-hand button-balanced" style="height: 86px; line-height: 24px;">
+          <small>Συμφόριση</small>
           </button>
-        <div class="col"></div>
-        <button class="button button-block ion-ios-people button-calm" style="height: 86px; font-size: 0.9em;">
-        Υπερπληρότητα
-        </button>
-      </div>
-      <div class="row">
-        <div class="col"></div>
-        <button class="button button-block ion-android-walk button-royal" style="height: 86px; font-size: 0.9em;">
-        Παρακώληση Λεωφ/λορίδας
-        </button>
-        <div class="col"></div>
-        <button class="button button-block ion-android-hand button-balanced" style="height: 86px; font-size: 0.9em;">
-        Συμφόριση
-        </button>
-        <div class="col"></div>
-        <button class="button button-block ion-social-tux button-dark" style="height: 86px; font-size: 0.9em;">
-        Άλλο
-        </button>
-      </div>
+          </div>
+          <div class="col">
+          <button class="button button-block ion-social-tux button-dark" style="height: 86px; line-height: 24px;">
+          <small>Άλλο</small>
+          </button>
+          </div>
+        </div>
       </ion-list>
       <ion-list>
       <div class="row">
-        <button class="button button-block">
-        ΕΚΙΝΗΣΗ
-        </button>
+        <div class="col">
+          <button class="button button-block">
+          ΕΚΙΝΗΣΗ
+          </button>
+        </div>
       </div>
       </ion-list>
     </ion-content>
