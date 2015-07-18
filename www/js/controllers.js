@@ -50,12 +50,19 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
         title: 'Cowbell',
         id: 6
     }];
-}).controller('PlaylistCtrl', function($scope, $stateParams) {}).controller('StartCtrl', function($scope, $state, $stateParams) {
-    $scope.browse = function() {
+}).controller('PlaylistCtrl', function($scope, $stateParams) {
+
+}).controller('StartCtrl', function($scope, $state, $stateParams, Routes) {
+  
+
+    $scope.start = function(choice) {
+        console.log($scope.choice);
         $state.go('app.browse');
     };
-}).controller('TripCtrl', ['$cordovaGeolocation', '$localStorage', 'Socket',
-    function($cordovaGeolocation, $localStorage, Socket) {
+}).controller('TripCtrl', ['$scope', '$state', '$stateParams', '$cordovaGeolocation', '$localStorage', 'Socket',
+    function($scope, $state, $stateParams, $cordovaGeolocation, $localStorage, Socket) {
+        console.log($stateParams.id);
+
         function distance(lat1, lon1, lat2, lon2, unit) {
             var radlat1 = Math.PI * lat1 / 180;
             var radlat2 = Math.PI * lat2 / 180;
@@ -86,7 +93,7 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
             var brng = rad * 180 / Math.PI;
             return (brng + 360) % 360;
         }
-        var vm = this;
+        var vm = $scope;
         var watchId = {},
             watchOptions = {
                 frequency: 20 * 60 * 1000,
@@ -136,13 +143,17 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
             }
             // Update view model
             vm.coords = coords;
-            Socket.publish('track/1/1', JSON.stringify(position_serialized));
+            Socket.publish('track/'+ $stateParams.id + '/1', JSON.stringify(position_serialized));
             // Save the observations on LocalStorage (Cached)
             $localStorage.setObject('keyGPS', watchId);
             $localStorage.setObject('coords', coords);
             $localStorage.setObject('previus_position', position_serialized);
         });
         vm.coords = $localStorage.getObject('coords', '[]');
+        vm.stop = function() {
+          watchId.clearWatch();
+          $state.go('app.stats');
+        };
     }
 ]).controller('TripStatsCtrl', function($scope, $state, $stateParams) {
     $scope.ok = function() {

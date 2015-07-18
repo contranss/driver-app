@@ -6,16 +6,13 @@
 				<input type="text" placeholder="Search">
 			</label>
 			<ion-radio ng-model="choice" ng-value="'A13'">A13</ion-radio>
-			<ion-radio ng-model="choice" ng-value="'A13'">24</ion-radio>
-			<ion-radio ng-model="choice" ng-value="'12'">12</ion-radio>
-			<ion-radio ng-model="choice" ng-value="'13'">13</ion-radio>
 		</div>
 	</ion-content>
 	<div class="row" style=" position: fixed; bottom: 20px;">
 		<div class="col">
-			<a class="button button-block button-balanced" ui-sref="app.browse({ id: choice })">
+			<button class="button button-block button-balanced" ng-click="start(choice)">
 			ΕΚΙΝΗΣΗ
-			</a>
+			</button>
 		</div>
 	</div>
 </ion-view>
