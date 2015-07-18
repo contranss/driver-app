@@ -3,9 +3,9 @@
 		<div class="list list-inset">
 			<label class="item item-input">
 				<i class="icon ion-search placeholder-icon"></i>
-				<input type="text" placeholder="Search">
+				<input type="text" ng-model="query" ng-change="search(query)" placeholder="Search">
 			</label>
-			<ion-radio ng-model="choice" ng-value="'A13'">A13</ion-radio>
+			<ion-radio ng-repeat="item in routes" ng-model="item.id" ng-value="">{{ item.short_name }} | {{ item.long_name }}</ion-radio>
 		</div>
 	</ion-content>
 	<div class="row" style=" position: fixed; bottom: 20px;">

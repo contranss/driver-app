@@ -53,8 +53,15 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
 }).controller('PlaylistCtrl', function($scope, $stateParams) {
 
 }).controller('StartCtrl', function($scope, $state, $stateParams, Routes) {
-  
-
+    $scope.search = function(query) {
+        Routes.search({
+            "search": query
+        }, function(data) {
+            console.log(data);
+            $scope.routes = data.results;
+        });
+    };
+    $scope.search("");
     $scope.start = function(choice) {
         console.log($scope.choice);
         $state.go('app.browse');
@@ -143,7 +150,7 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
             }
             // Update view model
             vm.coords = coords;
-            Socket.publish('track/'+ $stateParams.id + '/1', JSON.stringify(position_serialized));
+            Socket.publish('track/' + $stateParams.id + '/1', JSON.stringify(position_serialized));
             // Save the observations on LocalStorage (Cached)
             $localStorage.setObject('keyGPS', watchId);
             $localStorage.setObject('coords', coords);
@@ -151,8 +158,8 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
         });
         vm.coords = $localStorage.getObject('coords', '[]');
         vm.stop = function() {
-          watchId.clearWatch();
-          $state.go('app.stats');
+            watchId.clearWatch();
+            $state.go('app.stats');
         };
     }
 ]).controller('TripStatsCtrl', function($scope, $state, $stateParams) {
