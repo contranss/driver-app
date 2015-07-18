@@ -57,7 +57,18 @@ angular.module('starter.controllers', [])
 
 .controller('StartCtrl', function($scope, $state, $stateParams) {
   $scope.browse = function() {
-    console.log('log');
     $state.go('app.browse');
+  };
+})
+
+.controller('TripCtrl', function($scope, $state, $stateParams) {
+  $scope.stop = function() {
+    $state.go('app.stats');
+  };
+})
+
+.controller('TripStatsCtrl', function($scope, $state, $stateParams) {
+  $scope.ok = function() {
+    $state.go('app.search');
   };
 });
