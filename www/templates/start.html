@@ -5,12 +5,14 @@
 				<i class="icon ion-search placeholder-icon"></i>
 				<input type="text" ng-model="query" ng-change="search(query)" placeholder="Search">
 			</label>
-			<ion-radio ng-repeat="item in routes" ng-model="item.id" ng-value="">{{ item.short_name }} | {{ item.long_name }}</ion-radio>
+			<ion-item ng-repeat="item in routes" ng-click="change_route(item.id)">
+				{{ item.short_name }} | {{ item.long_name }}
+			</ion-item>
 		</div>
 	</ion-content>
 	<div class="row" style=" position: fixed; bottom: 20px;">
 		<div class="col">
-			<button class="button button-block button-balanced" ng-click="start(choice)">
+			<button class="button button-block button-balanced" ng-click="start(choice)" ng-show="route_id">
 			ΕΚΙΝΗΣΗ
 			</button>
 		</div>

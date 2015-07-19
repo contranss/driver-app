@@ -50,9 +50,7 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
         title: 'Cowbell',
         id: 6
     }];
-}).controller('PlaylistCtrl', function($scope, $stateParams) {
-
-}).controller('StartCtrl', function($scope, $state, $stateParams, Routes) {
+}).controller('PlaylistCtrl', function($scope, $stateParams) {}).controller('StartCtrl', function($scope, $state, $stateParams, Routes) {
     $scope.search = function(query) {
         Routes.search({
             "search": query
@@ -61,14 +59,37 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
             $scope.routes = data.results;
         });
     };
+    $scope.route_id = "";
+    $scope.change_route = function(id) {
+        $scope.route_id = id;
+        console.log($scope.route_id);
+    };
     $scope.search("");
     $scope.start = function(choice) {
-        console.log($scope.choice);
-        $state.go('app.browse');
+        console.log($scope.route_id);
+        $state.go('app.browse', {id: $scope.route_id});
     };
-}).controller('TripCtrl', ['$scope', '$state', '$stateParams', '$cordovaGeolocation', '$localStorage', 'Socket',
-    function($scope, $state, $stateParams, $cordovaGeolocation, $localStorage, Socket) {
-        console.log($stateParams.id);
+}).controller('TripCtrl', ['$scope', '$state', '$stateParams', '$cordovaGeolocation', '$localStorage', 'Socket', 'Status',
+    function($scope, $state, $stateParams, $cordovaGeolocation, $localStorage, Socket, Status) {
+        var post = function(post_type) {
+            var post = {
+                "timestamp": new Date(),
+                "type": post_type,
+                "route": $stateParams.id,
+                "comment": "Demo text",
+                "coords": [0, 0],
+                "user": {
+                    "id": 1,
+                    "name": "George Theofilis",
+                    "type": "passenger"
+                }
+            };
+            Status.add_status({}, post, function(data) {
+              console.log(data);
+            });
+        };
+
+        post(8);
 
         function distance(lat1, lon1, lat2, lon2, unit) {
             var radlat1 = Math.PI * lat1 / 180;
@@ -159,8 +180,11 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
         vm.coords = $localStorage.getObject('coords', '[]');
         vm.stop = function() {
             watchId.clearWatch();
+            post(9);
             $state.go('app.stats');
         };
+
+        vm.post = post;
     }
 ]).controller('TripStatsCtrl', function($scope, $state, $stateParams) {
     $scope.ok = function() {
