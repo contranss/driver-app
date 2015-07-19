@@ -69,28 +69,37 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
         console.log($scope.route_id);
         var route_id = $scope.route_id;
         $scope.route_id = null;
-        $state.go('app.browse', {id: route_id});
+        $state.go('app.browse', {
+            id: route_id
+        });
     };
 }).controller('TripCtrl', ['$scope', '$state', '$stateParams', '$cordovaGeolocation', '$localStorage', 'Socket', 'Status',
     function($scope, $state, $stateParams, $cordovaGeolocation, $localStorage, Socket, Status) {
         var post = function(post_type) {
-            var post = {
-                "timestamp": new Date(),
-                "type": post_type,
-                "route": $stateParams.id,
-                "comment": "Demo text",
-                "coords": [0, 0],
-                "user": {
-                    "id": 1,
-                    "name": "George Theofilis",
-                    "type": "passenger"
-                }
+            var posOptions = {
+                timeout: 10000,
+                enableHighAccuracy: false
             };
-            Status.add_status({}, post, function(data) {
-              console.log(data);
+            $cordovaGeolocation.getCurrentPosition(posOptions).then(function(position) {
+                var post = {
+                    "timestamp": new Date(),
+                    "type": post_type,
+                    "route": $stateParams.id,
+                    "comment": "Demo text",
+                    "coords": [position.coords.longitude, position.coords.latitude],
+                    "user": {
+                        "id": 1,
+                        "name": "George Theofilis",
+                        "type": "passenger"
+                    }
+                };
+                Status.add_status({}, post, function(data) {
+                    console.log(data);
+                });
+            }, function(err) {
+                // error
             });
         };
-
         post(8);
 
         function distance(lat1, lon1, lat2, lon2, unit) {
@@ -185,7 +194,6 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
             post(9);
             $state.go('app.stats');
         };
-
         vm.post = post;
     }
 ]).controller('TripStatsCtrl', function($scope, $state, $stateParams) {
