@@ -67,7 +67,9 @@ angular.module('starter.controllers', []).controller('AppCtrl', function($scope,
     $scope.search("");
     $scope.start = function(choice) {
         console.log($scope.route_id);
-        $state.go('app.browse', {id: $scope.route_id});
+        var route_id = $scope.route_id;
+        $scope.route_id = null;
+        $state.go('app.browse', {id: route_id});
     };
 }).controller('TripCtrl', ['$scope', '$state', '$stateParams', '$cordovaGeolocation', '$localStorage', 'Socket', 'Status',
     function($scope, $state, $stateParams, $cordovaGeolocation, $localStorage, Socket, Status) {
